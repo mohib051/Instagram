@@ -24,9 +24,9 @@ const Navbar = () => {
     let dispatch = useDispatch()
     const [open, setOpen] = useState(false)
   
-
+    const baseUrl = import.meta.env.VITE_BASE_URL
   const handleLogout = () => {
-    axios.get("http://localhost:3000/users/logout",  {
+    axios.get( baseUrl+"/users/logout",  {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => {

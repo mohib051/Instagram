@@ -5,6 +5,7 @@ import axios from "axios";
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const baseUrl = import.meta.env.VITE_BASE_URL
   const [profile, setProfile] = useState({
     fullName: "",
     username: "",
@@ -13,6 +14,7 @@ const EditProfile = () => {
     link: "",
     profilePicture: "",
   });
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ const EditProfile = () => {
     }
 
     axios
-      .patch("http://localhost:3000/users/editprofile", formData, {
+      .patch(baseUrl+"/users/editprofile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

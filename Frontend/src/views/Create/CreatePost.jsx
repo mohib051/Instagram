@@ -19,6 +19,7 @@ const CreatePost = ({open , setOpen}) => {
     const [imagePrv, setimagePrv] = useState('')
     const imageRef = useRef()
 
+    const baseUrl = import.meta.env.VITE_BASE_URL
     const handleSubmit = (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
@@ -26,7 +27,7 @@ const CreatePost = ({open , setOpen}) => {
         formData.append("media", media);
         formData.append("caption", caption);
 
-        axios.post('http://localhost:3000/post/create', formData, {
+        axios.post(baseUrl+'/post/create', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data"
@@ -59,7 +60,7 @@ const CreatePost = ({open , setOpen}) => {
         const token = localStorage.getItem("token");
 
         try {
-            const response = await axios.post("http://localhost:3000/ai/", formData,{
+            const response = await axios.post(baseUrl+"/ai/", formData,{
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"

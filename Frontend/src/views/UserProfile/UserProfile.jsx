@@ -4,12 +4,11 @@ import { useParams } from "react-router-dom";
 
 import axios from "axios";
 
+
 const UserProfile = () => {
-
-
-  const {userId} = useParams()
-     
+  const baseUrl = import.meta.env.VITE_BASE_URL
   
+  const {userId} = useParams()
   const [userData, setUserData] = useState(null);
   const [posts, setposts] = useState([]);
   const [selfData, setSelfData] = useState(null)
@@ -17,7 +16,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/user/${userId}`, {
+      .get(`${baseUrl}/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -33,7 +32,7 @@ const UserProfile = () => {
 
 
   const followUnfollowHandler = (updateUserId)=>{
-    axios.patch(`http://localhost:3000/users/follow/${updateUserId}`, {},
+    axios.patch(`${baseUrl}/users/follow/${updateUserId}`, {},
       {
         headers: {
           Authorization: `Bearer ${token}`,

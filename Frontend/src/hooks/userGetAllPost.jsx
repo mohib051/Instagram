@@ -9,10 +9,11 @@ import { useDispatch } from "react-redux"
 const userGetAllPost = ()=>{
     const dispatch = useDispatch()
     const token = localStorage.getItem("token")
+    const baseUrl = import.meta.env.VITE_BASE_URL
     useEffect(() => {
         const fetchAllPost = ()=>{
              axios
-                  .get("http://localhost:3000/feed", {
+                  .get(baseUrl+"/feed", {
                     headers: {
                       Authorization: `Bearer ${token}`,
                     },

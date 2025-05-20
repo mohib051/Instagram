@@ -19,13 +19,14 @@ const Feed = () => {
   const token = localStorage.getItem("token");
   const [text, setText] = useState('')
   const [commentOpen, setCommentOpen] = useState(false)
-
+   const [openDialogId, setOpenDialogId] = useState(null);
 
   const {posts} =  useSelector((store)=>store.post)
   console.log(posts);
   const dispatch = useDispatch()
   console.log(posts);
-  
+
+  const baseUrl = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
     if (!token) {
@@ -33,7 +34,7 @@ const Feed = () => {
     }
 
     axios
-      .get("http://localhost:3000/feed", {
+      .get(baseUrl+"/feed", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,7 +63,7 @@ const Feed = () => {
   const likesHandler = (postId) => {
     axios
       .patch(
-        `http://localhost:3000/post/update/${postId}`,
+        `${baseUrl}/post/update/${postId}`,
         {},
         {
           headers: {
@@ -82,7 +83,7 @@ const Feed = () => {
   };
 
   const followUnfollowHandler = (updateUserId)=>{
-    axios.patch(`http://localhost:3000/users/follow/${updateUserId}`, {},
+    axios.patch(`${baseUrl}/users/follow/${updateUserId}`, {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -126,6 +127,22 @@ const Feed = () => {
     return `${differenceInHours} hour${differenceInHours > 1 ? "s" : ""} ago`;
   };
   
+  const handleDelete = (postId) => {
+    axios
+      .delete(`${baseUrl}/post/delete/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch(setPosts(posts.filter((post) => post._id !== postId)));
+        setOpenDialogId(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     // <div className=" flex justify-end relative font-light">
@@ -156,14 +173,15 @@ const Feed = () => {
                     </div>
                   </div>
                   <span className="cursor-pointer pr-2">
-                    <Dialog>
+                    <Dialog open={openDialogId === post._id}
+        onOpenChange={(open) => setOpenDialogId(open ? post._id : null)}>
                       <DialogTrigger asChild>
                         <MoreHorizontal className="cursor-pointer"/>
                       </DialogTrigger>
                       <DialogContent>
                         <Button variant='ghost' className='cursor-pointer w-full text-[#ED4956] font-bold'>Unfollow</Button>
                         <Button variant='ghost' className='cursor-pointer w-full '>Add to favorites</Button>
-                        <Button variant='ghost' className='cursor-pointer w-full '>Delete</Button>
+                        <Button onClick={()=>handleDelete(post._id)} variant='ghost' className='cursor-pointer w-full '>Delete</Button>
                       </DialogContent>
                     </Dialog>
                   </span>

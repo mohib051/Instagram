@@ -17,11 +17,11 @@ const Login = () => {
     const [login, setLogin] = useState(false)
     const user = useSelector(state => state.auth)
     const dispatch = useDispatch()
-
+    const baseUrl = import.meta.env.VITE_BASE_URL
     const handleSubmit = (e) => {
         e.preventDefault()
         setLogin(true)
-        axios.post('http://localhost:3000/users/login', { email, password })
+        axios.post(baseUrl+'/users/login', { email, password })
         .then(response => {
             console.log(response.data.user)
             localStorage.setItem("token",response?.data?.token)
@@ -95,7 +95,7 @@ const Login = () => {
             </form>
             
             <div className=' mt-2 p-3 flex justify-center'>
-                <p>Don't have an account? <a className='font-bold text-blue-400' href="/register">Sign Up</a></p>
+                <p>Dont have an account? <a className='font-bold text-blue-400' href="/register">Sign Up</a></p>
             </div>
         </section>
     </main>
