@@ -15,7 +15,6 @@ import { setPosts } from "@/Redux/PostSlice";
 
 const Feed = () => {
   const Navigate = useNavigate();
-  // const [posts, setPosts] = useState([]);
   const [user, setUser] = useState({});
   const token = localStorage.getItem("token");
   const [text, setText] = useState('')
@@ -23,31 +22,32 @@ const Feed = () => {
 
 
   const {posts} =  useSelector((store)=>store.post)
+  console.log(posts);
   const dispatch = useDispatch()
   console.log(posts);
   
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     Navigate("/");
-  //   }
+  useEffect(() => {
+    if (!token) {
+      Navigate("/");
+    }
 
-  //   axios
-  //     .get("http://localhost:3000/feed", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       setPosts(res?.data?.posts);
-  //       setUser(res.data.user);
-  //       console.log(res.data.posts);
+    axios
+      .get("http://localhost:3000/feed", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setPosts(res?.data?.posts);
+        setUser(res.data.user);
+        console.log(res.data.posts);
         
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [Navigate]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [Navigate]);
 
 
   const commentHandler = (e) => {
@@ -71,8 +71,7 @@ const Feed = () => {
         }
       )
       .then((res) => {
-        dispatch(setPosts((prevPosts) =>
-          prevPosts.map((post) =>
+        dispatch(setPosts(posts.map((post) =>
             post._id === postId ? { ...post, likes: res.data.postData.likes } : post
           )
         ));
@@ -92,13 +91,13 @@ const Feed = () => {
       .then((res)=>{
         console.log(res);
         
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
+        dispatch(setPosts(
+          posts.map((post) =>
             post.author._id === updateUserId
               ? { ...post, author: { ...post.author, followers: res.data.postData.followers } } // Only updating author fields
               : post
           )
-        );
+        ))
         console.log(posts);
         
       })

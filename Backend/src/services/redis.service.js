@@ -3,9 +3,9 @@ import config from "../config/config.js";
 
 
 const redis = new Redis({
-    host : config.REDIS_HOST,
-    port : config.REDIS_PORT,
-    password : config.REDIS_PASSWORD
+    host : 'redis-14433.c263.us-east-1-2.ec2.redns.redis-cloud.com',
+    port : '14433',
+    password : 'DJu20uWYKKR9hg4fcaMkvxbk77OWyLa5'
 });
 
 

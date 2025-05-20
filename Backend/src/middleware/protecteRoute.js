@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../model/user.model.js";
 import config from "../config/config.js";
-import redis from '../services/redis.service.js';
+// import redis from '../services/redis.service.js';
 
 export const protecteRoute = async (req, res, next) => {
     try {
@@ -12,25 +12,29 @@ export const protecteRoute = async (req, res, next) => {
         }
         const decoded = await User.verifyToken(token)
 
-        const isTokenBlockListed = await redis.get(`blacklist: ${token}`)
+        // const isTokenBlockListed = await redis.get(`blacklist: ${token}`)
 
-        if(isTokenBlockListed){
-            return res.status(401).json({ message: "Unauthorized: Invalid token" });   
-        }
-        let user = await redis.get(`user : ${decoded.id}`)
-        if(user){
-            user = JSON.parse(user)
-        }
-        if (!user) {
-            user = await User.findById(decoded.id)
-            if(user){
-                delete user._doc.password
-                await redis.set(`user : ${decoded.id}`, JSON.stringify(user))
-            }else{
-                return res.status(401).json({ message: "Unauthorized: User not found" });
-            }    
-        }
+        // if(isTokenBlockListed){
+        //     return res.status(401).json({ message: "Unauthorized: Invalid token" });   
+        // }
+        // let user = await redis.get(`user : ${decoded.id}`)
+        // if(user){
+        //     user = JSON.parse(user)
+        // }
+        // if (!user) {
+        //     user = await User.findById(decoded.id)
+        //     if(user){
+        //         delete user._doc.password
+        //         await redis.set(`user : ${decoded.id}`, JSON.stringify(user))
+        //     }else{
+        //         return res.status(401).json({ message: "Unauthorized: User not found" });
+        //     }    
+        // }
         
+        const user = await User.findById(decoded.id).select("-password")
+        if (!user) {
+            return res.status(401).json({ message: "Unauthorized: User not found" });
+        }
         req.user = user;
         req.tokenData = {token , ...decoded}
         next();

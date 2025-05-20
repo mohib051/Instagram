@@ -1,7 +1,7 @@
 import User from "../model/user.model.js"
 import Post from "../model/posts.model.js"
 
-import redis from "../services/redis.service.js"
+// import redis from "../services/redis.service.js"
 import { validationResult } from "express-validator"
 import * as userService from "../services/user.service.js"
 import * as uploadFiles from "../middleware/post.middleware.js"
@@ -84,10 +84,6 @@ export const profileController = async (req, res) => {
 
 
 export const logoutController = async (req, res) => {
-    
-    const timeRemainingForToken = req.tokenData.exp * 1000 - Date.now()
-    
-    await redis.set(`blacklist: ${req.tokenData.token}`, true , "EX" ,Math.floor(timeRemainingForToken/1000))
 
     res.status(200).json({message: "User logged out successfully"})
 }
