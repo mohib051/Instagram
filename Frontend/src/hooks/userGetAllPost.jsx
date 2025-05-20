@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 
 import { setPosts } from "@/Redux/PostSlice"
 import axios from "axios"

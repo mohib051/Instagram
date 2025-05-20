@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import  { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSettings } from "react-icons/fi";
-import Navbar from "../../components/Navbar/Navbar";
+
 import axios from "axios";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { MoreHorizontal, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,  } from "react-redux";
 import { setAuthUser } from "@/Redux/AuthSlice";
 
 
@@ -16,7 +16,7 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [posts, setposts] = useState([]);
   const [showSettings, setShowSettings] = useState(false);
-  const [theme, setTheme] = useState(false);
+  
   const token = localStorage.getItem("token");
 
   // const user = useSelector(state => state.auth.user)

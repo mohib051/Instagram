@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar/Navbar";
+
 import { FaRegHeart, FaRegComment, FaHeart } from "react-icons/fa";
 import { RiTelegram2Line } from "react-icons/ri";
 import { FaRegBookmark } from "react-icons/fa6";
-import { BsThreeDots } from "react-icons/bs";
+
 import { DialogTrigger,Dialog, DialogContent } from "@/components/ui/dialog";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";

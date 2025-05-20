@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import  { useState, useEffect } from "react";
+
 import { useParams } from "react-router-dom";
-import { FiSettings } from "react-icons/fi";
-import Navbar from "../../components/Navbar/Navbar";
+
 import axios from "axios";
 
 const UserProfile = () => {
@@ -10,7 +9,7 @@ const UserProfile = () => {
 
   const {userId} = useParams()
      
-  const Navigate = useNavigate();
+  
   const [userData, setUserData] = useState(null);
   const [posts, setposts] = useState([]);
   const [selfData, setSelfData] = useState(null)
