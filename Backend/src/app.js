@@ -11,10 +11,10 @@ import cors from "cors"
 
 const app = express();
 
-// const corsOptions = {
-//     origin : "https://instagram-frontend-ohpm.onrender.com/",
-//     Credential : true
-// }
+const corsOptions = {
+    origin : "https://instagram-frontend-ohpm.onrender.com/",
+    Credential : true
+}
 app.use(cookieParser())
 app.use(morgan("dev"))
 
