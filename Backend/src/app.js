@@ -12,7 +12,7 @@ import cors from "cors"
 const app = express();
 
 // const corsOptions = {
-//     origin : "http://localhost:5173",
+//     origin : "https://instagram-frontend-ohpm.onrender.com/",
 //     Credential : true
 // }
 app.use(cookieParser())
